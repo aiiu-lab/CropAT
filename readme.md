@@ -24,7 +24,7 @@ Chen-Che Huang, Tzuhsuan Huang, Jun-Cheng Chen
 # Directory Structure
 
 1. After cloning the repo [instruct-pix2pix](https://github.com/timothybrooks/instruct-pix2pix), move all files and directory under `instruct_pix2pix_stuff` into the repo directory `instruct-pix2pix`.
-2. The model’s VGG backbone is initialized using the converted weights from [CMT](https://github.com/Shengcao-Cao/CMT). Pleace the download the weights under the directory `checkpoints`.
+2. The model’s VGG backbone is initialized using the converted weights from [CMT](https://github.com/Shengcao-Cao/CMT). Please the download the weights under the directory `checkpoints`.
 
 Please structure your directories in the following manner:
 

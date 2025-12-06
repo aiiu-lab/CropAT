@@ -1,0 +1,18 @@
+python train_learnable_prompt.py \
+--gpu-id 0 \
+--source-domain "cityscapes" \
+--target-domain "cityscapes_foggy" \
+--steps 5 \
+--edit "turn it into <domain>" \
+--placeholder-token "<domain>" \
+--num_vectors 1 \
+--train-iters 10000 \
+--batch-size 1 \
+--gradient-accumulation-steps 4 \
+--learning-rate 1.0e-3 \
+--cfg-text 7.5 \
+--cfg-image 1.5 \
+--seed 58912 \
+--output-dir exps/c2fc \
+--visualization-period 25 \
+--save-steps 500

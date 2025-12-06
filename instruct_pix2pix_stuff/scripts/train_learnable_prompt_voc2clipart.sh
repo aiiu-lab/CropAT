@@ -1,0 +1,20 @@
+python train_learnable_prompt.py \
+--gpu-id 0 \
+--steps 5 \
+--source-domain voc2007+voc2012 \
+--target-domain clipart \
+--resolution 256 \
+--edit "an image in the style of <domain>" \
+--placeholder-token "<domain>" \
+--initializer-token "cartoon" \
+--num_vectors 1 \
+--train-iters 100 \
+--batch-size 1 \
+--gradient-accumulation-steps 4 \
+--learning-rate 1.0e-3 \
+--cfg-text 7.5 \
+--cfg-image 1.5 \
+--seed 58912 \
+--output-dir exps/voc2clipart \
+--visualization-period 10 \
+--save-steps 10

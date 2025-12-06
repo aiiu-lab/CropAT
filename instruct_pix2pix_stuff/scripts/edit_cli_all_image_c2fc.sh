@@ -1,0 +1,11 @@
+python edit_cli_an_image.py \
+--gpu-id 0 \
+--source-domain 'cityscapes' \
+--resolution 512 \
+--steps 20 \
+--cfg-text 7.5 \
+--edit "an image in the style of <domain>" \
+--placeholder-token "<domain>" \
+--placeholder-token-ckpt-path 'exps/c2fc/checkpoint/placeholder_token_steps_9999.safetensors' \
+--output-dir "target_like/c2fc" \
+--seed 58912

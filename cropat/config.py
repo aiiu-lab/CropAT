@@ -1,0 +1,85 @@
+# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
+from detectron2.config import CfgNode as CN
+
+
+def add_ateacher_config(cfg):
+    """
+    Add config for semisupnet.
+    """
+    _C = cfg
+
+    _C.INPUT.APPLY_RANDOM_ERASING = True
+    
+    _C.TEST.VAL_LOSS = True
+
+    _C.MODEL.RPN.UNSUP_LOSS_WEIGHT = 1.0
+    _C.MODEL.RPN.LOSS = "CrossEntropy"
+    _C.MODEL.ROI_HEADS.LOSS = "CrossEntropy"
+    _C.MODEL.WITH_GRL = True
+
+    _C.SOLVER.IMG_PER_BATCH_LABEL = 1
+    _C.SOLVER.IMG_PER_BATCH_UNLABEL = 1
+    _C.SOLVER.FACTOR_LIST = (1,)
+    _C.SOLVER.BACKBONE_BASE_LR = 0.001
+    _C.SOLVER.OPTIMIZER = 'SGD'
+    _C.SOLVER.GRADIENT_ACCUMULATION_STEPS = 1
+
+    _C.DATASETS.TRAIN_LABEL = ("coco_2017_train",)
+    _C.DATASETS.TRAIN_UNLABEL = ("coco_2017_train",)
+    _C.DATASETS.TRAIN_TARGET_LIKE_LABEL = ("ip2p_cityscapes_foggy_train",)
+    _C.DATASETS.CROSS_DATASET = True
+    _C.TEST.EVALUATOR = "COCOeval"
+
+    _C.DATASETS.USE_ALL_SPLITS = False
+    _C.DATASETS.ADD_CROPS = CN()
+    _C.DATASETS.ADD_CROPS.SRC = CN()
+    _C.DATASETS.ADD_CROPS.SRC.CROP_IMG_DIR = None
+    _C.DATASETS.ADD_CROPS.SRC.ANNO_FILE_PATH = None
+    _C.DATASETS.ADD_CROPS.SRC.TARGET_LIKE_CROP_IMG_DIR = None
+    _C.DATASETS.ADD_CROPS.SRC.NUM_CROPS = 0
+    _C.DATASETS.ADD_CROPS.SRC.SAMPLE_CLASS_METHOD = 'uniform'
+    _C.DATASETS.ADD_CROPS.SRC.MIXUP_RATIO = 0.5
+    _C.DATASETS.ADD_CROPS.SRC.IOA_THRESHOLD = 0.9
+    _C.DATASETS.ADD_CROPS.TGT = CN()
+    _C.DATASETS.ADD_CROPS.TGT.CROP_IMG_DIR = None
+    _C.DATASETS.ADD_CROPS.TGT.ANNO_FILE_PATH = None
+    _C.DATASETS.ADD_CROPS.TGT.TARGET_LIKE_CROP_IMG_DIR = None
+    _C.DATASETS.ADD_CROPS.TGT.NUM_CROPS = 0
+    _C.DATASETS.ADD_CROPS.TGT.SAMPLE_CLASS_METHOD = 'uniform'
+    _C.DATASETS.ADD_CROPS.TGT.MIXUP_RATIO = 0.5
+    _C.DATASETS.ADD_CROPS.TGT.IOA_THRESHOLD = 0.9
+
+    _C.SEMISUPNET = CN()
+
+    # Output dimension of the MLP projector after `res5` block
+    _C.SEMISUPNET.MLP_DIM = 128
+
+    # Semi-supervised training
+    _C.SEMISUPNET.Trainer = "cropateacher"
+    _C.SEMISUPNET.BBOX_THRESHOLD = 0.7
+    _C.SEMISUPNET.PSEUDO_BBOX_SAMPLE = "thresholding"
+    # _C.SEMISUPNET.PSEUDO_BBOX_BRANCH = 'unsup_data_weak'
+    _C.SEMISUPNET.TEACHER_UPDATE_ITER = 1
+    _C.SEMISUPNET.BURN_UP_STEP = 12000
+    _C.SEMISUPNET.EMA_KEEP_RATE = 0.0
+    _C.SEMISUPNET.UNSUP_LOSS_WEIGHT = 4.0
+    _C.SEMISUPNET.SUP_LOSS_WEIGHT = 0.5
+    _C.SEMISUPNET.LOSS_WEIGHT_TYPE = "standard"
+    _C.SEMISUPNET.DIS_TYPE = "res4"
+    _C.SEMISUPNET.DIS_LOSS_WEIGHT = 0.1
+    _C.SEMISUPNET.DOMAIN_DISCRIMATE_ON_STRONG_VIEWS_ONLY = False
+
+    # CMT configs
+    _C.SEMISUPNET.CONTRASTIVE = True
+    _C.SEMISUPNET.CONTRASTIVE_LOSS_WEIGHT = 0.05
+
+    # dataloader
+    # supervision level
+    _C.DATALOADER.SUP_PERCENT = 100.0  # 5 = 5% dataset as labeled set
+    _C.DATALOADER.RANDOM_DATA_SEED = 0  # random seed to read data
+    _C.DATALOADER.RANDOM_DATA_SEED_PATH = "dataseed/COCO_supervision.txt"
+
+    _C.EMAMODEL = CN()
+    _C.EMAMODEL.SUP_CONSIST = True
+
+    _C.VIS_LABEL_PERIOD = 0

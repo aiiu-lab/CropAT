@@ -186,7 +186,7 @@ CropAT/
 @inproceedings{huang2026cropat,
   title={CropAT: Leveraging Diffusion-Generated Target-Like Cropped Objects for Pseudo-Label Refinement in Domain-Adaptive Object Detection},
   author={Chen-Che Huang, Tzuhsuan Huang, Jun-Cheng Chen},
-  booktitle={IEEE/CVF Conference on Winter Conference on Applications of Computer Vision (WACV)},
+  booktitle={IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
   year={2026}
 }
 ```
